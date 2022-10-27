@@ -29,3 +29,11 @@
     background-color: aquamarine;
     border: 1px solid black;
 }
+
+#display {
+    height: 100%;
+    width: 100%;
+    font-size: 36px;
+    text-align: right;
+    border: none;
+}

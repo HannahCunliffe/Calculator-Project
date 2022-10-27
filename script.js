@@ -33,3 +33,13 @@ function operate(operator, num1, num2) {
             return result;
     }
 }
+
+//function containing any code needed to be executed on page load
+function pageLoad() {
+    //sets display to default value
+    document.getElementById("display").value = 0;
+}
+
+pageLoad();
+
+
