@@ -15,15 +15,6 @@ function divide(num1,num2) {
     return num1 / num2;
 };
 
-function logResults(num2, result) {
-   /*  if (currentOperation !="") {
-        updateLog(currentOperation);
-    } */
-    updateLog(num2);
-    updateLog("=");
-    updateLog(result);
-}
-
 function operate(operator, num1, num2) {
     let result = 0;
     //converts both inputs from strings to numbers
@@ -33,56 +24,47 @@ function operate(operator, num1, num2) {
     switch (operator) {
         case ("+"):
             result = add(num1, num2);
-            //
-            if (afterFirstSum == true) {
-                updateLog(currentOperation);
-            }
             display.value = result;
-            logResults(num2, result);
-            display.placeholder = result;
+            updateLog(num2);
+            updateLog("=");
+            updateLog(result);
             firstNumber = result;
             display.value = "";
-            operationSelected = false;
-            afterFirstSum = true;
+            display.placeholder = firstNumber;
+            currentOperation = undefined;
             return 
         case("-"):
-            result = subtract(num1,num2);
-            if (afterFirstSum == true) {
-                updateLog(currentOperation);
-            }
+            result = subtract(num1, num2);
             display.value = result;
-            logResults(num2, result);
-            display.placeholder = result;
+            updateLog(num2);
+            updateLog("=");
+            updateLog(result);
             firstNumber = result;
             display.value = "";
-            operationSelected = false;
-            afterFirstSum = true;
+            display.placeholder = firstNumber;
+            currentOperation = undefined;
             return 
         case("x"):
             result = multiply(num1, num2);
-            if (afterFirstSum == true) {
-                updateLog(currentOperation);
-            }
             display.value = result;
-            logResults(num2, result);
-            display.placeholder = result;
+            updateLog(num2);
+            updateLog("=");
+            updateLog(result);
             firstNumber = result;
             display.value = "";
-            operationSelected = false;
-            afterFirstSum = true;
+            display.placeholder = firstNumber;
+            currentOperation = undefined;
             return 
         case("÷"):
-            result = divide(num1,num2);
-            if (afterFirstSum == true) {
-                updateLog(currentOperation);
-            }
+            result = divide(num1, num2);
             display.value = result;
-            logResults(num2, result);
-            display.placeholder = result;
+            updateLog(num2);
+            updateLog("=");
+            updateLog(result);
             firstNumber = result;
             display.value = "";
-            operationSelected = false;
-            afterFirstSum = true;
+            display.placeholder = firstNumber;
+            currentOperation = undefined;
             return 
     }
 }
@@ -107,8 +89,10 @@ function addEventListeners() {
 
 //function to remove the last character from the calculator log
 function removeLastInputLog() {
-    let newValue = log.value.slice(0,-1)
-    log.value = newValue;
+    let currentLog = log.value;
+    let newLog = currentLog.slice(0,-2);
+    log.value = newLog;
+    return;
 }
 
 function clickedButton() {
@@ -121,125 +105,162 @@ function clickedButton() {
         switch(clicked) {
             case ("+"):
 
-                //checks if input is empty, if empty, it won't execute any functions
-                if (display.value == "") {
-                    return
-                };
+            //test
+            if (currentOperation == "+") {
+                return;
+            }
 
-                if (firstNumber !== undefined) {
-                    processSum(currentOperation)
+            if (firstNumber !== undefined && display.value !== "") {
+                operate(currentOperation, firstNumber, display.value);
+                return
+            }
+
+                if (operationSelected == false) {
+                    if (firstNumber == undefined) {
+                        firstNumber = display.value;
+                        currentOperation = "+";
+                        updateLog(firstNumber);
+                        updateLog(currentOperation);
+                        display.value = "";
+                        display.placeholder = firstNumber;
+                        operationSelected = true;
+                    } else {
+                        currentOperation = "+";
+                        updateLog(currentOperation);
+                        operationSelected = true;
+                    }
+                    
+                } else {
+                    removeLastInputLog();
                     currentOperation = "+";
-                    return
+                    updateLog("+");
                 }
 
-                currentOperation = "+";
+                return
+            
 
-                firstNumber = display.value;
-                updateLog(display.value);
-                display.placeholder = display.value;
-                display.value = "";
-               
-                if (operationSelected == true) {
-                    removeLastInputLog();
-                    updateLog(clicked);
-                };
-
-                updateLog(clicked);
-                operationSelected = true;
-                
-                
             case ("-"):
 
-                //checks if input is empty, if empty, it won't execute any functions
-                if (display.value == "") {
-                    return
-                };
+                if (currentOperation == "-") {
+                    return;
+                }
 
-            
-                if (firstNumber !== undefined) {
-                    processSum(currentOperation)
-                    currentOperation = "-";
+                if (firstNumber !== undefined && display.value !== "") {
+                    operate(currentOperation, firstNumber, display.value);
                     return
                 }
 
-                currentOperation = "-";
-
-                firstNumber = display.value;
-                updateLog(display.value);
-                display.placeholder = display.value;
-                display.value = "";
-               
-                if (operationSelected == true) {
+                if (operationSelected == false) {
+                    if (firstNumber == undefined) {
+                        firstNumber = display.value;
+                        currentOperation = "-";
+                        updateLog(firstNumber);
+                        updateLog(currentOperation);
+                        display.value = "";
+                        display.placeholder = firstNumber;
+                        operationSelected = true;
+                    } else {
+                        currentOperation = "-";
+                        updateLog(currentOperation);
+                        operationSelected = true;
+                    }
+                   
+                } else {
                     removeLastInputLog();
-                    updateLog(clicked);
-                };
+                    updateLog("-");
+                    currentOperation = "-";
+                }
 
-                updateLog(clicked);
-                operationSelected = true;
+                
 
+                return
+             
             case ("x"):
 
-                    //checks if input is empty, if empty, it won't execute any functions
-                    if (display.value == "") {
-                        return
-                    };
-    
-                    if (firstNumber !== undefined) {
-                        processSum(currentOperation)
+                if (currentOperation == "x") {
+                    return;
+                }
+
+                if (firstNumber !== undefined && display.value !== "") {
+                    operate(currentOperation, firstNumber, display.value);
+                    return
+                }
+
+                if (operationSelected == false) {
+                    if (firstNumber == undefined) {
+                        firstNumber = display.value;
                         currentOperation = "x";
-                        return
+                        updateLog(firstNumber);
+                        updateLog(currentOperation);
+                        display.value = "";
+                        display.placeholder = firstNumber;
+                        operationSelected = true;
+                    } else {
+                        currentOperation = "x";
+                        updateLog(currentOperation);
+                        operationSelected = true;
                     }
-    
+                    
+                } else {
+                    removeLastInputLog();
+                    updateLog("x");
                     currentOperation = "x";
-    
-                    firstNumber = display.value;
-                    updateLog(display.value);
-                    display.placeholder = display.value;
-                    display.value = "";
-                   
-                    if (operationSelected == true) {
-                        removeLastInputLog();
-                        updateLog(clicked);
-                    };
-    
-                    updateLog(clicked);
-                    operationSelected = true;
+                }
+
+                return
 
             case ("÷"):
 
-                     //checks if input is empty, if empty, it won't execute any functions
-                    if (display.value == "") {
-                         return
-                    };
-        
-                    if (firstNumber !== undefined) {
-                         processSum(currentOperation)
-                         currentOperation = "÷";
-                     return
+                if (currentOperation == "÷") {
+                    return;
+                }
+
+                if (firstNumber !== undefined && display.value !== "") {
+                    operate(currentOperation, firstNumber, display.value);
+                    return
+                }
+
+                if (operationSelected == false) {
+                    if (firstNumber == undefined) {
+                        firstNumber = display.value;
+                        currentOperation = "÷";
+                        updateLog(firstNumber);
+                        updateLog(currentOperation);
+                        display.value = "";
+                        display.placeholder = firstNumber;
+                        operationSelected = true;
+                    } else {
+                        currentOperation = "÷";
+                        updateLog(currentOperation);
+                        operationSelected = true;
                     }
-        
-                  currentOperation = "÷";
-        
-                    firstNumber = display.value;
-                    updateLog(display.value);
-                     display.placeholder = display.value;
-                     display.value = "";
-                       
-                    if (operationSelected == true) {
-                         removeLastInputLog();
-                          updateLog(clicked);
-                     };
-        
-                     updateLog(clicked);
-                    operationSelected = true;
+                    
+                } else {
+                    removeLastInputLog();
+                    updateLog("÷");
+                    currentOperation = "÷";
+                }
+
+                return
+            case ("="):
+                operate(currentOperation, firstNumber, display.value);
+
+                return;
+               
         }
     }
     else { 
         operationSelected = false;
+        console.log("reached!")
         switch(clicked) {
             case ("Clear"):
                 resetDisplay();
                 return
+            case ("Back"):
+                let currentDisplay = display.value;
+                let newDisplay = currentDisplay.slice(0,-1);
+                display.value = newDisplay;
+                return;
             case ("1"):
                 if (display.value == "0") {
                     display.value = "1";
@@ -321,7 +342,9 @@ function clickedButton() {
 function resetDisplay() {
     functionSelected = false;
     display.value = "0";
+    display.placeholder = "0";
     firstNumber = undefined;
+    secondNumber = undefined;
     //add more to this as more elements added later
     currentOperation = undefined;
     operationSelected = false;
@@ -345,8 +368,9 @@ pageLoad();
 let display = document.getElementById("display");
 let log = document.getElementById("displayLog");
 let firstNumber;
-let operationSelected = false;
 let currentOperation;
 let afterFirstSum = false;
+let operationSelected = false;
+
 
 
