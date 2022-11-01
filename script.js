@@ -24,6 +24,7 @@ function operate(operator, num1, num2) {
     switch (operator) {
         case ("+"):
             result = add(num1, num2);
+            result = processDecimal(result);
             display.value = result;
             updateLog(num2);
             updateLog("=");
@@ -35,6 +36,7 @@ function operate(operator, num1, num2) {
             return 
         case("-"):
             result = subtract(num1, num2);
+            result = processDecimal(result);
             display.value = result;
             updateLog(num2);
             updateLog("=");
@@ -46,6 +48,7 @@ function operate(operator, num1, num2) {
             return 
         case("x"):
             result = multiply(num1, num2);
+            result = processDecimal(result);
             display.value = result;
             updateLog(num2);
             updateLog("=");
@@ -65,6 +68,7 @@ function operate(operator, num1, num2) {
                 return;
             } 
             result = divide(num1, num2);
+            result = processDecimal(result);
             display.value = result;
             updateLog(num2);
             updateLog("=");
