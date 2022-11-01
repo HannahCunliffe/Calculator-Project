@@ -56,15 +56,14 @@ function operate(operator, num1, num2) {
             currentOperation = undefined;
             return 
         case("÷"):
-            if (num2 == 0) {
+          /*   if (num2 == 0) {
                 result = "Can't divide by zero!"
                 display.value = result;
                 updateLog (num2);
                 updateLog ("=");
                 updateLog ("?");
-                firstNumber = undefined;
                 return;
-            }
+            } */
             result = divide(num1, num2);
             display.value = result;
             updateLog(num2);
@@ -237,6 +236,12 @@ function clickedButton() {
                     return;
                 }
 
+                if (firstNumber !== undefined && display.value == "0") {
+                    display.value = "";
+                    display.placeholder = "Can't divide by zero!";
+                    return;
+                }
+
                 if (firstNumber !== undefined && display.value !== "") {
                     operate(currentOperation, firstNumber, display.value);
                     return
@@ -266,6 +271,11 @@ function clickedButton() {
 
                 return
             case ("="):
+                if (currentOperation == "÷" && firstNumber !== undefined && display.value == "0") {
+                    display.value = "";
+                    display.placeholder = "Can't divide by zero!";
+                    return;
+                }
                 operate(currentOperation, firstNumber, display.value);
 
                 return;
