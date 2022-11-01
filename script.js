@@ -18,8 +18,8 @@ function divide(num1,num2) {
 function operate(operator, num1, num2) {
     let result = 0;
     //converts both inputs from strings to numbers
-    num1 = Number(num1);
-    num2 = Number(num2);
+    //num1 = Number(num1);
+    num2 = processDecimal(num2);
     //switch statement to execute different functions depending on which operator is selected
     switch (operator) {
         case ("+"):
@@ -76,9 +76,19 @@ function processSum(operator) {
     
 }
 
-//for handling additional sums done without refreshing the calculator
-function additionalSums(num1, num2, currentOperation) {
-    
+//function to check if number is whole or decimal, then rounds it to 8 decimal places if decimal
+function processDecimal(num) {
+    num = Number(num);
+    var result = (num - Math.floor(num)) !== 0;
+    //returns true if the number is a decimal, else returns false if whole
+    if (result == true) {
+        //if decimal rounds to 8 decimal places
+        //parseFloat ensures that trailing zeroes are removed from the number
+        num = parseFloat(num.toFixed(8));
+        return num;
+    } else {
+        return num;
+    }
 }
 
 //function to add onClick event listeners to all the calculator buttons
@@ -118,6 +128,7 @@ function clickedButton() {
                 if (operationSelected == false) {
                     if (firstNumber == undefined) {
                         firstNumber = display.value;
+                        firstNumber = processDecimal(firstNumber);
                         currentOperation = "+";
                         updateLog(firstNumber);
                         updateLog(currentOperation);
@@ -153,6 +164,7 @@ function clickedButton() {
                 if (operationSelected == false) {
                     if (firstNumber == undefined) {
                         firstNumber = display.value;
+                        firstNumber = processDecimal(firstNumber);
                         currentOperation = "-";
                         updateLog(firstNumber);
                         updateLog(currentOperation);
@@ -189,6 +201,7 @@ function clickedButton() {
                 if (operationSelected == false) {
                     if (firstNumber == undefined) {
                         firstNumber = display.value;
+                        firstNumber = processDecimal(firstNumber);
                         currentOperation = "x";
                         updateLog(firstNumber);
                         updateLog(currentOperation);
@@ -223,6 +236,7 @@ function clickedButton() {
                 if (operationSelected == false) {
                     if (firstNumber == undefined) {
                         firstNumber = display.value;
+                        firstNumber = processDecimal(firstNumber);
                         currentOperation = "÷";
                         updateLog(firstNumber);
                         updateLog(currentOperation);
@@ -251,7 +265,6 @@ function clickedButton() {
     }
     else { 
         operationSelected = false;
-        console.log("reached!")
         switch(clicked) {
             case ("Clear"):
                 resetDisplay();
@@ -332,6 +345,10 @@ function clickedButton() {
                 }
                 return
             case("."):
+                //makes it so another decimal point can't be entered if one's in the display
+                if (display.value.includes(".")) {
+                    return;
+                }
                 display.value += ".";
                 return
 
