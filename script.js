@@ -56,6 +56,15 @@ function operate(operator, num1, num2) {
             currentOperation = undefined;
             return 
         case("÷"):
+            if (num2 == 0) {
+                result = "Can't divide by zero!"
+                display.value = result;
+                updateLog (num2);
+                updateLog ("=");
+                updateLog ("?");
+                firstNumber = undefined;
+                return;
+            }
             result = divide(num1, num2);
             display.value = result;
             updateLog(num2);
