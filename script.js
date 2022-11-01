@@ -105,6 +105,64 @@ function addEventListeners() {
         .forEach(btn=>btn.addEventListener('click', clickedButton));
 }
 
+//adds event listeners to allow the calculator buttons to be activated via keyboard
+function addKeyboardEventListeners() {
+    //loop to add keyboard event listeners for all the numeric buttons
+    for (let i = 0; i < 10; i++) {
+        document.addEventListener("keypress", function(event) {
+            if (event.key === `${i}`) {
+                document.getElementById(`btn${i}`).click();
+            }
+        })
+    };
+
+    //adds keyboard event listeners for operation buttons
+
+    document.addEventListener("keypress", function(event) {
+        if (event.key === "+") {
+            document.getElementById("btn+").click();
+        }
+    });
+
+    document.addEventListener("keypress", function(event) {
+        if (event.key === "-") {
+            document.getElementById("btn-").click();
+        }
+    });
+
+    document.addEventListener("keypress", function(event) {
+        if (event.key === "x") {
+            document.getElementById("btnx").click();
+        }
+    });
+
+    document.addEventListener("keypress", function(event) {
+        if (event.key === "/") {
+            document.getElementById("btn/").click();
+        }
+    });
+
+    document.addEventListener("keypress", function(event) {
+        if (event.key === "=") {
+            document.getElementById("btn=").click();
+        }
+    });
+
+    /* had to change to 'keydown' event here as keypress isn't invoked for backspace */
+    document.addEventListener("keydown", function(event) {
+        if (event.key === "Backspace") {
+            document.getElementById("btnBack").click();
+        }
+    });
+
+    document.addEventListener("keypress", function(event) {
+        if (event.key === ".") {
+            document.getElementById("btn.").click();
+        }
+    });
+
+}
+
 //function to remove the last character from the calculator log
 function removeLastInputLog() {
     let currentLog = log.value;
@@ -397,7 +455,10 @@ function pageLoad() {
     //sets display to default value
     display.value = "0";
     addEventListeners();
+    addKeyboardEventListeners();
+    //prevents user from freely clicking into inputs
     log.disabled = true;
+    display.disabled = true;
 }
 
 let display = document.getElementById("display");
