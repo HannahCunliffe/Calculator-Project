@@ -56,14 +56,14 @@ function operate(operator, num1, num2) {
             currentOperation = undefined;
             return 
         case("÷"):
-          /*   if (num2 == 0) {
+           if (num2 == 0) {
                 result = "Can't divide by zero!"
                 display.value = result;
                 updateLog (num2);
                 updateLog ("=");
                 updateLog ("?");
                 return;
-            } */
+            } 
             result = divide(num1, num2);
             display.value = result;
             updateLog(num2);
@@ -381,7 +381,6 @@ function resetDisplay() {
     display.placeholder = "0";
     firstNumber = undefined;
     secondNumber = undefined;
-    //add more to this as more elements added later
     currentOperation = undefined;
     operationSelected = false;
     log.value = "";
@@ -396,13 +395,14 @@ function updateLog(addedItem) {
 //function containing any code needed to be executed for setup purposes on page load
 function pageLoad() {
     //sets display to default value
-    document.getElementById("display").value = "0";
+    display.value = "0";
     addEventListeners();
+    log.disabled = true;
 }
 
-pageLoad();
 let display = document.getElementById("display");
 let log = document.getElementById("displayLog");
+pageLoad();
 let firstNumber;
 let currentOperation;
 let afterFirstSum = false;

@@ -81,12 +81,40 @@
     background-color: #8693AB;
     border:none;
     font-size: 20px;
+    /* rounds button edges */
+    border-radius: 8px;
+    box-shadow: 0 2px #747474;
+}
+
+.button:hover {
+    background-color: #49566d;
+}
+
+.button:active {
+    transform: translateY(4px);
+    
+}
+
+input:disabled {
+    color: black;
+}
+
+input::placeholder {
+    color: black;
 }
 
 .specialButton {
     background-color: #bdd4e7;
 }
 
+.specialButton:hover {
+    background-color: #4a5974;
+}
+
 .clearButton {
     background-color: #b52a18;
+}
+
+.clearButton:hover {
+    background-color: #720805;
 }
