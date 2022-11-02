@@ -452,6 +452,8 @@ function resetDisplay() {
 function updateLog(addedItem) {
     //string literal used to add new item to log, made it easy to add a space before new item
     log.value += ` ${addedItem}`;
+    //scrolls the log along so most recent entries are visible if log is now longer than display width
+    log.scrollLeft = log.scrollWidth;
 }
 
 //function containing any code needed to be executed for setup purposes on page load
